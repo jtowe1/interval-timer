@@ -81,6 +81,9 @@ function App() {
     isRunning: false
   })
 
+  const [audioContext, setAudioContext] = useState<AudioContext | null>(null)
+  const [audioEnabled, setAudioEnabled] = useState(false)
+
   const addTimer = () => {
     const newTimer: Timer = {
       id: crypto.randomUUID(),
@@ -113,7 +116,7 @@ function App() {
     }))
   }
 
-  const startMeditation = () => {
+  const startMeditation = async () => {
     // Validate that all timers have a duration > 0
     const hasInvalidTimer = appState.timers.some(timer =>
       timer.originalMinutes === 0 && timer.originalSeconds === 0
@@ -123,6 +126,9 @@ function App() {
       alert('Please set a duration for all timers (at least 1 second)')
       return
     }
+
+    // Initialize audio with user interaction
+    await initializeAudio()
 
     setAppState(prev => ({
       ...prev,
@@ -159,20 +165,58 @@ function App() {
     }))
   }
 
-  const playChime = () => {
-    const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)()
-    const oscillator = audioContext.createOscillator()
-    const gainNode = audioContext.createGain()
+  const initializeAudio = async () => {
+    try {
+      const AudioContextClass = window.AudioContext || (window as any).webkitAudioContext
+      const ctx = new AudioContextClass()
+      
+      if (ctx.state === 'suspended') {
+        await ctx.resume()
+      }
+      
+      setAudioContext(ctx)
+      setAudioEnabled(true)
+      return ctx
+    } catch (error) {
+      console.warn('Audio initialization failed:', error)
+      setAudioEnabled(false)
+      return null
+    }
+  }
 
-    oscillator.connect(gainNode)
-    gainNode.connect(audioContext.destination)
+  const playChime = async () => {
+    try {
+      let ctx = audioContext
+      
+      if (!ctx) {
+        ctx = await initializeAudio()
+        if (!ctx) return
+      }
 
-    oscillator.frequency.setValueAtTime(528, audioContext.currentTime) // C5 note
-    gainNode.gain.setValueAtTime(0.3, audioContext.currentTime)
-    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 2)
+      const oscillator = ctx.createOscillator()
+      const gainNode = ctx.createGain()
 
-    oscillator.start(audioContext.currentTime)
-    oscillator.stop(audioContext.currentTime + 2)
+      oscillator.connect(gainNode)
+      gainNode.connect(ctx.destination)
+
+      oscillator.frequency.setValueAtTime(528, ctx.currentTime) // C5 note
+      gainNode.gain.setValueAtTime(0.3, ctx.currentTime)
+      gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 2)
+
+      oscillator.start(ctx.currentTime)
+      oscillator.stop(ctx.currentTime + 2)
+      
+      // Vibration fallback for mobile
+      if ('vibrate' in navigator) {
+        navigator.vibrate([200, 100, 200])
+      }
+    } catch (error) {
+      console.warn('Audio playback failed:', error)
+      // Vibration-only fallback
+      if ('vibrate' in navigator) {
+        navigator.vibrate([300, 100, 300])
+      }
+    }
   }
 
   // Main timer countdown effect
@@ -475,6 +519,28 @@ function App() {
             })}
           </VStack>
 
+          {/* Audio Test Button */}
+          {!audioEnabled && !appState.isRunning && (
+            <Button
+              bg="transparent"
+              border="1px solid #666"
+              color="gray.300"
+              _hover={{ bg: 'whiteAlpha.100' }}
+              w="full"
+              h={10}
+              fontSize="sm"
+              rounded="lg"
+              onClick={async () => {
+                await initializeAudio()
+                // Test the chime
+                setTimeout(() => playChime(), 100)
+              }}
+              mb={2}
+            >
+              🔊 Enable Sound (Tap to Test)
+            </Button>
+          )}
+
           {/* Main Action Button */}
           <Button
             bg={appState.isRunning ? "#ef4444" : "#4ade80"}
@@ -488,7 +554,7 @@ function App() {
             fontWeight="500"
             rounded="lg"
             onClick={appState.isRunning ? stopMeditation : startMeditation}
-            mt={3}
+            mt={audioEnabled || appState.isRunning ? 3 : 1}
           >
             {appState.isRunning ? 'Stop Meditation' : 'Begin Meditation'}
           </Button>
