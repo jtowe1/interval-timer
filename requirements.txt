@@ -1,0 +1,11 @@
+[ ] I would like to create a meditation interval timer app.
+[ ] This app will be a meditation timer with the option to add successive interval timers.
+[ ] The app opens to a single alarm that can be labeled in a text box to the left, and adjusted by minutes in a numerical toggle menu to the right that counts up to 60 minutes.
+[ ] For example, a user could add into the text box " body scan" and toggle the timer to 5 minutes.
+[ ] Below this is a button that reads "Add Timer" that, when selected, will add an additional timer with an identical layout to the original timer.
+[ ] Every time a new timer is selected, an "Add Timer" button to add an additional timer is populated below the newest timer.
+[ ] The background is midnight blue and the buttons are golden. (Please use creative discretion to design the layout but include meditative thematics and keep it looking sleek and clean.)
+[ ] When each timer ends, there should be a peaceful sound along the lines of a gentle meditation chime or tuning fork that lasts no longer than 3 seconds.
+[ ] Each timer will have a "Pause" and "Clear" button to the right of the numerical toggle to adjust the correlating timer.
+[ ] Below all timers will be a button that begins the timers labeled "Start."
+[ ] Each timer added will automatically start at the end of the prior timer until the last timer is completed.
