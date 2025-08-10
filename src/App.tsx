@@ -9,7 +9,7 @@ import {
   createSystem,
   defineConfig
 } from '@chakra-ui/react'
-import { TimerCard } from './components/TimerCard'
+import { CircularTimer } from './components/CircularTimer'
 import { useTimer } from './hooks/useTimer'
 import { useAudio } from './hooks/useAudio'
 import { meditationColors } from './theme/colors'
@@ -75,13 +75,6 @@ function App() {
     setMode('setup')
   }
 
-  const handleToggleMode = () => {
-    if (mode === 'setup') {
-      setMode('session')
-    } else {
-      setMode('setup')
-    }
-  }
 
 
   return (
@@ -120,91 +113,23 @@ function App() {
               alignItems={{ base: 'center', lg: 'flex-start' }}
               justifyContent="center"
             >
-              {/* Main Timer Display */}
+              {/* Circular Timer Display */}
               <Box 
                 flex="1" 
                 maxW={{ base: '100%', lg: '600px' }}
                 display="flex"
                 justifyContent="center"
               >
-                {(() => {
-                  const currentTimer = appState.timers[appState.currentTimerIndex]
-                  if (currentTimer) {
-                    return (
-                      <TimerCard
-                        key={currentTimer.id}
-                        timer={currentTimer}
-                        index={appState.currentTimerIndex}
-                        isCurrentTimer={true}
-                        isRunning={appState.isRunning}
-                        onUpdateTimer={updateTimer}
-                        onAddTimer={addTimer}
-                        onRemoveTimer={removeTimer}
-                        canRemove={false}
-                        displayMode="primary"
-                        showControls={false}
-                      />
-                    )
-                  }
-                  return null
-                })()} 
+                <CircularTimer
+                  timers={appState.timers}
+                  currentTimerIndex={appState.currentTimerIndex}
+                  isRunning={appState.isRunning}
+                  onUpdateTimer={updateTimer}
+                  onAddTimer={addTimer}
+                  onRemoveTimer={removeTimer}
+                  mode="session"
+                />
               </Box>
-
-              {/* Floating Sidebar - Other Timers */}
-              {appState.timers.length > 1 && (
-                <Box 
-                  w={{ base: '100%', lg: '280px' }}
-                  maxH={{ base: 'none', lg: '70vh' }}
-                  overflowY="auto"
-                  className="zen-emerge"
-                  css={{
-                    '&::-webkit-scrollbar': {
-                      width: '4px',
-                    },
-                    '&::-webkit-scrollbar-track': {
-                      bg: 'transparent',
-                    },
-                    '&::-webkit-scrollbar-thumb': {
-                      bg: 'rgba(255, 255, 255, 0.2)',
-                      borderRadius: '2px',
-                    },
-                  }}
-                >
-                  <VStack gap={3} align="stretch">
-                    <Text
-                      color="rgba(255, 255, 255, 0.6)"
-                      fontSize="sm"
-                      fontWeight="400"
-                      letterSpacing="0.05em"
-                      textAlign="center"
-                      mb={2}
-                    >
-                      OTHER TIMERS
-                    </Text>
-                    
-                    {appState.timers.map((timer, index) => {
-                      // Don't show the current timer in sidebar
-                      if (index === appState.currentTimerIndex) return null
-                      
-                      return (
-                        <TimerCard
-                          key={timer.id}
-                          timer={timer}
-                          index={index}
-                          isCurrentTimer={false}
-                          isRunning={appState.isRunning}
-                          onUpdateTimer={updateTimer}
-                          onAddTimer={addTimer}
-                          onRemoveTimer={removeTimer}
-                          canRemove={false}
-                          displayMode={timer.status === 'completed' ? 'secondary' : 'tertiary'}
-                          showControls={false}
-                        />
-                      )
-                    })}
-                  </VStack>
-                </Box>
-              )}
             </Box>
             
             {/* Session Controls */}
@@ -303,25 +228,16 @@ function App() {
                 </Text>
               </VStack>
 
-              {/* Timer Cards - Setup Mode Only */}
-              <VStack gap={6} w="full" className="zen-emerge">
-                
-                {appState.timers.map((timer, index) => (
-                  <TimerCard
-                    key={timer.id}
-                    timer={timer}
-                    index={index}
-                    isCurrentTimer={index === 0} // Make first timer primary in setup
-                    isRunning={false}
-                    onUpdateTimer={updateTimer}
-                    onAddTimer={addTimer}
-                    onRemoveTimer={removeTimer}
-                    canRemove={appState.timers.length > 1}
-                    displayMode={index === 0 ? 'primary' : 'secondary'}
-                    showControls={true}
-                  />
-                ))}
-              </VStack>
+              {/* Circular Timer Setup */}
+              <CircularTimer
+                timers={appState.timers}
+                currentTimerIndex={-1} // No current timer in setup mode
+                isRunning={appState.isRunning}
+                onUpdateTimer={updateTimer}
+                onAddTimer={addTimer}
+                onRemoveTimer={removeTimer}
+                mode="setup"
+              />
 
 
               {/* Main Action Button */}

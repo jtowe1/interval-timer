@@ -274,7 +274,7 @@ export const TimerCard = ({
                       })
                     }}
                   >
-                    <HStack spacing={2} justify="center">
+                    <HStack gap={2} justify="center">
                       <NumberInput.DecrementTrigger asChild>
                         <IconButton
                           size={{ base: "md", md: "lg" }}
@@ -347,7 +347,7 @@ export const TimerCard = ({
                       })
                     }}
                   >
-                    <HStack spacing={2} justify="center">
+                    <HStack gap={2} justify="center">
                       <NumberInput.DecrementTrigger asChild>
                         <IconButton
                           size={{ base: "md", md: "lg" }}
@@ -565,7 +565,7 @@ export const TimerCard = ({
                   })
                 }}
               >
-                <HStack spacing={1}>
+                <HStack gap={1}>
                   <NumberInput.DecrementTrigger asChild>
                     <IconButton
                       size="sm"
@@ -637,7 +637,7 @@ export const TimerCard = ({
                   })
                 }}
               >
-                <HStack spacing={1}>
+                <HStack gap={1}>
                   <NumberInput.DecrementTrigger asChild>
                     <IconButton
                       size="sm"

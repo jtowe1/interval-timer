@@ -303,6 +303,48 @@
   box-shadow: 0 4px 20px rgba(13, 127, 230, 0.4);
 }
 
+/* Circular Timer Specific Animations */
+.circular-timer {
+  position: relative;
+  margin: 0 auto;
+}
+
+.circular-timer svg {
+  filter: drop-shadow(0 4px 20px rgba(0, 0, 0, 0.3));
+}
+
+.circular-timer path {
+  transition: stroke-dasharray 0.5s var(--ease-breathe-out),
+              stroke-opacity 0.3s var(--ease-breathe-out);
+}
+
+.circular-timer circle {
+  transition: stroke-width 0.4s var(--ease-breathe-out),
+              stroke-opacity 0.3s var(--ease-breathe-out),
+              stroke-dasharray 0.5s var(--ease-breathe-out);
+}
+
+/* Gentle rotation for active timer rings */
+@keyframes timer-ring-pulse {
+  0% { 
+    stroke-opacity: 0.6; 
+    transform: rotate(0deg);
+  }
+  50% { 
+    stroke-opacity: 0.9; 
+    transform: rotate(0.5deg);
+  }
+  100% { 
+    stroke-opacity: 0.6; 
+    transform: rotate(0deg);
+  }
+}
+
+.timer-ring-active {
+  animation: timer-ring-pulse 3s var(--ease-meditation) infinite;
+  transform-origin: center;
+}
+
 /* Accessible alternatives for reduced motion */
 @media (prefers-reduced-motion: reduce) {
   /* Disable all breathing and motion animations */
