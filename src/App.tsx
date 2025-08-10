@@ -11,7 +11,6 @@ import {
 } from '@chakra-ui/react'
 import { TimerCard } from './components/TimerCard'
 import { useTimer } from './hooks/useTimer'
-import { useKeyboardNavigation } from './hooks/useKeyboardNavigation'
 import { useAudio } from './hooks/useAudio'
 import { meditationColors } from './theme/colors'
 
@@ -84,13 +83,6 @@ function App() {
     }
   }
 
-  // Keyboard navigation
-  useKeyboardNavigation({
-    isRunning: appState.isRunning,
-    onStartStop: appState.isRunning ? handleStopMeditation : handleStartMeditation,
-    onAddTimer: mode === 'setup' ? addTimer : undefined,
-    onToggleMode: handleToggleMode
-  })
 
   return (
     <ChakraProvider value={system}>
@@ -312,28 +304,7 @@ function App() {
               </VStack>
 
               {/* Timer Cards - Setup Mode Only */}
-              <VStack gap={6} w="full" role="region" aria-labelledby="setup-heading" className="zen-emerge">
-                <Text 
-                  id="setup-heading"
-                  color="rgba(255, 255, 255, 0.7)" 
-                  fontSize="lg" 
-                  textAlign="center" 
-                  fontWeight="300"
-                  as="h2"
-                >
-                  Configure Your Practice
-                  <Text 
-                    as="span" 
-                    fontSize="sm" 
-                    color="rgba(255, 255, 255, 0.5)" 
-                    display="block" 
-                    mt={2}
-                    fontWeight="300"
-                    px={{ base: 2, sm: 0 }}
-                  >
-                    Use Space/Enter to begin • A to add timer • ? for help
-                  </Text>
-                </Text>
+              <VStack gap={6} w="full" className="zen-emerge">
                 
                 {appState.timers.map((timer, index) => (
                   <TimerCard
