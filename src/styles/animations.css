@@ -1,0 +1,142 @@
+/* Meditation-focused animations and transitions */
+
+/* Breathing animation for active timer */
+@keyframes breathe {
+  0%, 100% { 
+    transform: scale(1); 
+    opacity: 0.8;
+  }
+  50% { 
+    transform: scale(1.02); 
+    opacity: 1;
+  }
+}
+
+/* Gentle pulse for running indicator */
+@keyframes gentle-pulse {
+  0%, 100% { 
+    opacity: 1; 
+    transform: scale(1);
+  }
+  50% { 
+    opacity: 0.7; 
+    transform: scale(1.1);
+  }
+}
+
+/* Fade in animation */
+@keyframes fade-in {
+  from { 
+    opacity: 0; 
+    transform: translateY(10px);
+  }
+  to { 
+    opacity: 1; 
+    transform: translateY(0);
+  }
+}
+
+/* Slide in from left */
+@keyframes slide-in-left {
+  from { 
+    opacity: 0; 
+    transform: translateX(-20px);
+  }
+  to { 
+    opacity: 1; 
+    transform: translateX(0);
+  }
+}
+
+/* Completion celebration */
+@keyframes completion-bounce {
+  0% { transform: scale(1); }
+  25% { transform: scale(1.1); }
+  50% { transform: scale(0.95); }
+  100% { transform: scale(1); }
+}
+
+/* Smooth color transitions */
+.smooth-transition {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.smooth-transition-fast {
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Meditation-specific classes */
+.breathing-animation {
+  animation: breathe 4s ease-in-out infinite;
+}
+
+.gentle-pulse {
+  animation: gentle-pulse 2s ease-in-out infinite;
+}
+
+.fade-in {
+  animation: fade-in 0.5s ease-out;
+}
+
+.slide-in-left {
+  animation: slide-in-left 0.4s ease-out;
+}
+
+.completion-bounce {
+  animation: completion-bounce 0.6s ease-out;
+}
+
+/* Focus ring animation */
+@keyframes focus-ring {
+  0% { 
+    box-shadow: 0 0 0 0px rgba(59, 130, 246, 0.5);
+  }
+  100% { 
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
+  }
+}
+
+.focus-ring {
+  animation: focus-ring 0.3s ease-out;
+}
+
+/* Hover lift effect */
+.hover-lift {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Button press feedback */
+.button-press {
+  transition: transform 0.1s ease;
+}
+
+.button-press:active {
+  transform: scale(0.98);
+}
+
+/* Reduced motion alternatives */
+@media (prefers-reduced-motion: reduce) {
+  .breathing-animation,
+  .gentle-pulse,
+  .fade-in,
+  .slide-in-left,
+  .completion-bounce,
+  .focus-ring {
+    animation: none;
+  }
+  
+  .hover-lift:hover {
+    transform: none;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  }
+  
+  .smooth-transition,
+  .smooth-transition-fast {
+    transition: opacity 0.1s ease;
+  }
+}
