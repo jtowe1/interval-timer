@@ -374,28 +374,28 @@ export const TimerCard = ({
             + Add Timer
           </Button>
 
-          <HStack gap={2}>
-            <IconButton
-              size="lg"
-              minW="44px"
-              minH="44px"
-              bg="rgba(255, 255, 255, 0.08)" 
-              color="white" 
-              className="smooth-transition button-press"
-              _hover={{ bg: 'rgba(255, 255, 255, 0.15)' }}
-              _focus={{
-                outline: '2px solid',
-                outlineColor: 'blue.300',
-                outlineOffset: '2px'
-              }}
-              onClick={() => onRemoveTimer(timer.id)}
-              disabled={!canRemove}
-              _disabled={{ opacity: 0.5, cursor: 'not-allowed' }}
-              aria-label={canRemove ? `Remove timer ${index + 1}` : 'Cannot remove the last timer'}
-            >
-              <LuX size={16} />
-            </IconButton>
-          </HStack>
+          {canRemove && (
+            <HStack gap={2}>
+              <IconButton
+                size="lg"
+                minW="44px"
+                minH="44px"
+                bg="rgba(255, 255, 255, 0.08)" 
+                color="white" 
+                className="smooth-transition button-press"
+                _hover={{ bg: 'rgba(255, 255, 255, 0.15)' }}
+                _focus={{
+                  outline: '2px solid',
+                  outlineColor: 'blue.300',
+                  outlineOffset: '2px'
+                }}
+                onClick={() => onRemoveTimer(timer.id)}
+                aria-label={`Remove timer ${index + 1}`}
+              >
+                <LuX size={16} />
+              </IconButton>
+            </HStack>
+          )}
         </HStack>
       </VStack>
     </Box>
