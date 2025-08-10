@@ -2,6 +2,7 @@
 @import './styles/animations.css';
 
 :root {
+  /* Enhanced font system for meditation experience */
   font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -15,7 +16,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   
-  /* Meditation-focused typography */
+  /* Meditation-focused typography with breathing room */
   --font-size-xs: 0.75rem;
   --font-size-sm: 0.875rem;
   --font-size-base: 1rem;
@@ -24,10 +25,60 @@
   --font-size-2xl: 1.5rem;
   --font-size-3xl: 1.875rem;
   --font-size-4xl: 2.25rem;
+  --font-size-5xl: 3rem;
+  --font-size-6xl: 3.75rem;
+  --font-size-7xl: 4.5rem;
+  --font-size-8xl: 6rem;
+  --font-size-9xl: 8rem;
   
-  /* Touch-friendly sizing */
+  /* Massive timer display - zen-like presence */
+  --font-size-timer-primary: clamp(4rem, 12vw, 8rem);
+  --font-size-timer-secondary: clamp(2rem, 6vw, 4rem);
+  --font-size-timer-tertiary: clamp(1.5rem, 4vw, 2.5rem);
+  
+  /* Ultra-light weights for peaceful feeling */
+  --font-weight-timer: 200;
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  
+  /* Meditation typography families */
+  --font-meditation-mono: 'SF Mono', 'Monaco', 'Cascadia Code', 'Roboto Mono', monospace;
+  --font-meditation-display: 'SF Pro Display', -apple-system, system-ui, sans-serif;
+  
+  /* Breathing room spacing system - based on 4-second meditation rhythm */
+  --space-breath-1: 0.25rem;  /* 4px - micro breath */
+  --space-breath-2: 0.5rem;   /* 8px - gentle breath */
+  --space-breath-3: 0.75rem;  /* 12px - shallow breath */
+  --space-breath-4: 1rem;     /* 16px - natural breath */
+  --space-breath-5: 1.25rem;  /* 20px - deep breath */
+  --space-breath-6: 1.5rem;   /* 24px - mindful breath */
+  --space-breath-8: 2rem;     /* 32px - profound breath */
+  --space-breath-10: 2.5rem;  /* 40px - transformative breath */
+  --space-breath-12: 3rem;    /* 48px - transcendent breath */
+  --space-breath-16: 4rem;    /* 64px - cosmic breath */
+  --space-breath-20: 5rem;    /* 80px - infinite breath */
+  
+  /* Touch-friendly sizing - critical for meditation UX */
   --touch-target-min: 44px;
-  --spacing-unit: 0.25rem;
+  --touch-target-comfort: 48px;
+  --spacing-unit: var(--space-breath-1);
+  
+  /* Control button specific sizing for meditation focus */
+  --button-size-primary: 48px;
+  --button-size-secondary: 40px;
+  --button-gap-primary: 8px;
+  --button-gap-secondary: 4px;
+  
+  /* Enhanced z-index scale for meditation layers */
+  --z-background: 0;
+  --z-base: 1;
+  --z-elevated: 10;
+  --z-floating: 100;
+  --z-modal: 1000;
+  --z-toast: 2000;
+  --z-tooltip: 3000;
 }
 
 a {
@@ -74,12 +125,37 @@ body {
   }
 }
 
-/* Mobile-first responsive design */
+/* Mobile-first responsive design with breathing adjustments */
 @media (max-width: 480px) {
   :root {
     --font-size-4xl: 2rem;
     --font-size-3xl: 1.75rem;
     --font-size-2xl: 1.375rem;
+    
+    /* Adjust timer sizes for mobile breathing */
+    --font-size-timer-primary: clamp(3rem, 15vw, 5rem);
+    --font-size-timer-secondary: clamp(1.5rem, 8vw, 3rem);
+    --font-size-timer-tertiary: clamp(1.25rem, 6vw, 2rem);
+    
+    /* Compress breathing room on smaller screens */
+    --space-breath-16: 2.5rem;
+    --space-breath-20: 3rem;
+  }
+}
+
+/* Large screens - expand breathing room */
+@media (min-width: 1024px) {
+  :root {
+    --space-breath-16: 5rem;
+    --space-breath-20: 6rem;
+  }
+}
+
+/* Ultra-wide screens - maximum zen spacing */
+@media (min-width: 1440px) {
+  :root {
+    --font-size-timer-primary: clamp(6rem, 10vw, 10rem);
+    --space-breath-20: 8rem;
   }
 }
 
@@ -105,6 +181,51 @@ button:hover {
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
+}
+
+/* Meditation timer control button safety rules */
+.meditation-timer-controls {
+  /* Prevent any form of truncation or overflow */
+  overflow: visible !important;
+  min-width: 0;
+  flex-shrink: 0;
+}
+
+.meditation-timer-controls button,
+.meditation-timer-controls [role="button"] {
+  /* Ensure buttons maintain minimum touch targets */
+  min-width: var(--touch-target-min);
+  min-height: var(--touch-target-min);
+  flex-shrink: 0 !important;
+  overflow: visible;
+  white-space: nowrap;
+}
+
+.meditation-timer-controls .chakra-numberinput {
+  /* Prevent number input containers from collapsing */
+  min-width: max-content;
+  flex-shrink: 0;
+}
+
+.meditation-timer-controls .chakra-stack {
+  /* Ensure stacks don't compress their children */
+  flex-wrap: nowrap !important;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Mobile-specific button protection */
+@media (max-width: 480px) {
+  .meditation-timer-controls button,
+  .meditation-timer-controls [role="button"] {
+    min-width: var(--touch-target-min);
+    min-height: var(--touch-target-min);
+    padding: 8px !important;
+  }
+  
+  .meditation-timer-controls {
+    gap: var(--button-gap-secondary) !important;
+  }
 }
 
 @media (prefers-color-scheme: light) {
