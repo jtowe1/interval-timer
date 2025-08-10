@@ -9,11 +9,10 @@ import {
   createSystem,
   defineConfig
 } from '@chakra-ui/react'
-import { LuVolumeX } from "react-icons/lu"
 import { TimerCard } from './components/TimerCard'
 import { useTimer } from './hooks/useTimer'
-import { useAudio } from './hooks/useAudio'
 import { useKeyboardNavigation } from './hooks/useKeyboardNavigation'
+import { useAudio } from './hooks/useAudio'
 import { meditationColors } from './theme/colors'
 
 
@@ -45,7 +44,8 @@ const config = defineConfig({
 const system = createSystem(config)
 
 function App() {
-  const { audioEnabled, initializeAudio, playChime } = useAudio()
+  const { initializeAudio, playChime } = useAudio()
+  
   const {
     appState,
     addTimer,
@@ -59,7 +59,7 @@ function App() {
 
 
   const handleStartMeditation = async () => {
-    // Initialize audio with user interaction
+    // Initialize audio for chime sounds
     await initializeAudio()
     
     const success = startMeditation()
@@ -352,32 +352,6 @@ function App() {
                 ))}
               </VStack>
 
-              {/* Audio Test Button */}
-              {!audioEnabled && (
-                <Button
-                  bg="rgba(255, 255, 255, 0.05)"
-                  border="1px solid rgba(255, 255, 255, 0.1)"
-                  color="rgba(255, 255, 255, 0.7)"
-                  className="meditation-button"
-                  _hover={{ 
-                    bg: 'rgba(255, 255, 255, 0.1)',
-                    borderColor: 'rgba(255, 255, 255, 0.2)'
-                  }}
-                  w="full"
-                  h={12}
-                  fontSize="sm"
-                  fontWeight="300"
-                  rounded="xl"
-                  onClick={async () => {
-                    await initializeAudio()
-                    setTimeout(() => playChime(), 100)
-                  }}
-                  aria-label="Enable audio notifications and test the meditation chime sound"
-                >
-                  <LuVolumeX style={{ marginRight: '8px' }} />
-                  Enable Sound & Test Chime
-                </Button>
-              )}
 
               {/* Main Action Button */}
               <Button

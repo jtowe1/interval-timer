@@ -16,7 +16,7 @@ export interface AppState {
   isRunning: boolean
 }
 
-export const useTimer = (playChime: () => void) => {
+export const useTimer = (playChime?: () => void) => {
   const [appState, setAppState] = useState<AppState>({
     timers: [{
       id: crypto.randomUUID(),
@@ -122,8 +122,11 @@ export const useTimer = (playChime: () => void) => {
 
         // Timer completed
         if (newMinutes < 0) {
-          playChime()
-
+          // Play chime sound when timer completes
+          if (playChime) {
+            playChime()
+          }
+          
           const nextTimerIndex = prev.currentTimerIndex + 1
           const hasNextTimer = nextTimerIndex < prev.timers.length
 
@@ -156,7 +159,7 @@ export const useTimer = (playChime: () => void) => {
     }, 1000)
 
     return () => clearInterval(interval)
-  }, [appState.isRunning, appState.currentTimerIndex, playChime])
+  }, [appState.isRunning, appState.currentTimerIndex])
 
   return {
     appState,
