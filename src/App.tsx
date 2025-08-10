@@ -48,8 +48,6 @@ function App() {
     updateTimer,
     removeTimer,
     startMeditation,
-    pauseTimer,
-    clearTimer,
     stopMeditation
   } = useTimer(playChime)
   
@@ -163,8 +161,6 @@ function App() {
                     onUpdateTimer={updateTimer}
                     onAddTimer={addTimer}
                     onRemoveTimer={removeTimer}
-                    onPauseTimer={pauseTimer}
-                    onClearTimer={clearTimer}
                     canRemove={appState.timers.length > 1}
                   />
                 ))}
@@ -203,8 +199,6 @@ function App() {
                       onUpdateTimer={updateTimer}
                       onAddTimer={addTimer}
                       onRemoveTimer={removeTimer}
-                      onPauseTimer={pauseTimer}
-                      onClearTimer={clearTimer}
                       canRemove={false} // Disable removal during session
                     />
                   )

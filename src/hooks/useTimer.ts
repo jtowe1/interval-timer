@@ -5,7 +5,7 @@ export interface Timer {
   label: string
   minutes: number
   seconds: number
-  status: 'pending' | 'running' | 'paused' | 'completed'
+  status: 'pending' | 'running' | 'completed'
   originalMinutes: number
   originalSeconds: number
 }
@@ -89,27 +89,6 @@ export const useTimer = (playChime: () => void) => {
     return true
   }, [appState.timers])
 
-  const pauseTimer = useCallback((id: string) => {
-    setAppState(prev => ({
-      ...prev,
-      timers: prev.timers.map(timer =>
-        timer.id === id
-          ? { ...timer, status: timer.status === 'running' ? 'paused' : 'running' }
-          : timer
-      )
-    }))
-  }, [])
-
-  const clearTimer = useCallback((id: string) => {
-    setAppState(prev => ({
-      ...prev,
-      timers: prev.timers.map(timer =>
-        timer.id === id
-          ? { ...timer, minutes: timer.originalMinutes, seconds: timer.originalSeconds, status: 'pending' }
-          : timer
-      )
-    }))
-  }, [])
 
   const stopMeditation = useCallback(() => {
     setAppState(prev => ({
@@ -185,8 +164,6 @@ export const useTimer = (playChime: () => void) => {
     updateTimer,
     removeTimer,
     startMeditation,
-    pauseTimer,
-    clearTimer,
     stopMeditation
   }
 }

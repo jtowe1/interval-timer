@@ -8,14 +8,14 @@ import {
   NumberInput,
   IconButton,
 } from '@chakra-ui/react'
-import { LuMinus, LuPlus, LuPlay, LuPause, LuRotateCcw, LuX } from "react-icons/lu"
+import { LuMinus, LuPlus, LuX } from "react-icons/lu"
 
 interface Timer {
   id: string
   label: string
   minutes: number
   seconds: number
-  status: 'pending' | 'running' | 'paused' | 'completed'
+  status: 'pending' | 'running' | 'completed'
   originalMinutes: number
   originalSeconds: number
 }
@@ -28,8 +28,6 @@ interface TimerCardProps {
   onUpdateTimer: (id: string, updates: Partial<Timer>) => void
   onAddTimer: () => void
   onRemoveTimer: (id: string) => void
-  onPauseTimer: (id: string) => void
-  onClearTimer: (id: string) => void
   canRemove: boolean
 }
 
@@ -41,13 +39,10 @@ export const TimerCard = ({
   onUpdateTimer,
   onAddTimer,
   onRemoveTimer,
-  onPauseTimer,
-  onClearTimer,
   canRemove,
 }: TimerCardProps) => {
   const isCompleted = timer.status === 'completed'
   const isTimerRunning = timer.status === 'running'
-  const isPaused = timer.status === 'paused'
 
   return (
     <Box
@@ -380,49 +375,6 @@ export const TimerCard = ({
           </Button>
 
           <HStack gap={2}>
-            <IconButton
-              size="lg"
-              minW="44px"
-              minH="44px"
-              bg={isPaused ? "green.500" : "rgba(255, 255, 255, 0.08)"}
-              color="white"
-              className="smooth-transition button-press"
-              _hover={{ 
-                bg: isPaused ? "green.400" : 'rgba(255, 255, 255, 0.15)'
-              }}
-              _focus={{
-                outline: '2px solid',
-                outlineColor: 'blue.300',
-                outlineOffset: '2px'
-              }}
-              onClick={() => onPauseTimer(timer.id)}
-              disabled={!isCurrentTimer && isRunning}
-              _disabled={{ opacity: 0.5, cursor: 'not-allowed' }}
-              aria-label={isPaused ? 'Resume timer' : 'Pause timer'}
-              aria-pressed={isPaused}
-            >
-              {isPaused ? <LuPlay size={16} /> : <LuPause size={16} />}
-            </IconButton>
-            
-            <IconButton
-              size="lg"
-              minW="44px"
-              minH="44px"
-              bg="rgba(255, 255, 255, 0.08)" 
-              color="white" 
-              className="smooth-transition button-press"
-              _hover={{ bg: 'rgba(255, 255, 255, 0.15)' }}
-              _focus={{
-                outline: '2px solid',
-                outlineColor: 'blue.300',
-                outlineOffset: '2px'
-              }}
-              onClick={() => onClearTimer(timer.id)}
-              aria-label={`Reset timer ${index + 1} to original time`}
-            >
-              <LuRotateCcw size={16} />
-            </IconButton>
-            
             <IconButton
               size="lg"
               minW="44px"
