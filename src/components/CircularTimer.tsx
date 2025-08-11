@@ -63,6 +63,44 @@ export const CircularTimer = ({
 
   const currentProgress = currentTimer ? calculateProgress(currentTimer) : 0
 
+  // Calculate cumulative session progress and timer boundaries
+  const calculateSessionData = () => {
+    const totalSessionSeconds = timers.reduce((sum, timer) => 
+      sum + timer.originalMinutes * 60 + timer.originalSeconds, 0)
+    
+    let cumulativeSeconds = 0
+    const timerBoundaries = timers.map((timer, index) => {
+      const timerDuration = timer.originalMinutes * 60 + timer.originalSeconds
+      const startPercent = (cumulativeSeconds / totalSessionSeconds) * 100
+      cumulativeSeconds += timerDuration
+      const endPercent = (cumulativeSeconds / totalSessionSeconds) * 100
+      
+      return {
+        index,
+        startPercent,
+        endPercent,
+        duration: timerDuration,
+        timer
+      }
+    })
+    
+    // Calculate overall session progress
+    const completedSeconds = timers.slice(0, currentTimerIndex).reduce((sum, timer) => 
+      sum + timer.originalMinutes * 60 + timer.originalSeconds, 0)
+    const currentTimerProgress = currentTimer ? 
+      (currentTimer.originalMinutes * 60 + currentTimer.originalSeconds) - (currentTimer.minutes * 60 + currentTimer.seconds) : 0
+    const sessionProgress = totalSessionSeconds > 0 ? 
+      ((completedSeconds + currentTimerProgress) / totalSessionSeconds) * 100 : 0
+    
+    return {
+      sessionProgress,
+      timerBoundaries,
+      totalSessionSeconds
+    }
+  }
+
+  const sessionData = calculateSessionData()
+
   // Generate color for timer based on index
   const getTimerColor = (index: number) => {
     const colorKeys = Object.keys(timerColors) as Array<keyof typeof timerColors>
@@ -79,6 +117,16 @@ export const CircularTimer = ({
     const largeArcFlag = angle > 180 ? 1 : 0
     
     return `M 180 ${180 - radius} A ${radius} ${radius} 0 ${largeArcFlag} 1 ${x} ${y}`
+  }
+
+  // Create position for timer boundary markers
+  const getMarkerPosition = (percent: number, radius: number) => {
+    const angle = (percent / 100) * 360 - 90 // Start from top (12 o'clock)
+    const radians = angle * Math.PI / 180
+    return {
+      x: 180 + radius * Math.cos(radians),
+      y: 180 + radius * Math.sin(radians)
+    }
   }
 
   if (mode === 'setup') {
@@ -111,39 +159,67 @@ export const CircularTimer = ({
                 strokeWidth="2"
               />
 
-              {/* Timer segments - show all configured timers */}
-              {timers.map((timer, index) => {
-                const segmentRadius = 120 - (index * 15) // Concentric rings
-                const color = getTimerColor(index)
-                const opacity = timer.status === 'completed' ? 1 : timer.status === 'running' ? 1 : 0.4
+              {/* Single ring preview - show all configured timers */}
+              <g>
+                {/* Background ring */}
+                <circle
+                  cx="180"
+                  cy="180"
+                  r="120"
+                  fill="none"
+                  stroke="rgba(255, 255, 255, 0.1)"
+                  strokeWidth="12"
+                />
 
-                return (
-                  <g key={timer.id}>
-                    {/* Background ring for each timer */}
-                    <circle
-                      cx="180"
-                      cy="180"
-                      r={segmentRadius}
+                {/* Timer segments preview */}
+                {sessionData.timerBoundaries.map((boundary, index) => {
+                  const color = getTimerColor(index)
+                  const startAngle = (boundary.startPercent / 100) * 360 - 90
+                  const endAngle = (boundary.endPercent / 100) * 360 - 90
+                  const startRadians = startAngle * Math.PI / 180
+                  const endRadians = endAngle * Math.PI / 180
+                  const radius = 120
+                  
+                  const startX = 180 + radius * Math.cos(startRadians)
+                  const startY = 180 + radius * Math.sin(startRadians)
+                  const endX = 180 + radius * Math.cos(endRadians)
+                  const endY = 180 + radius * Math.sin(endRadians)
+                  
+                  const largeArcFlag = (endAngle - startAngle) > 180 ? 1 : 0
+                  const path = `M ${startX} ${startY} A ${radius} ${radius} 0 ${largeArcFlag} 1 ${endX} ${endY}`
+
+                  return (
+                    <path
+                      key={`setup-segment-${boundary.timer.id}`}
+                      d={path}
                       fill="none"
                       stroke={color}
-                      strokeWidth="8"
-                      strokeOpacity={opacity * 0.3}
-                    />
-                    {/* Timer label arc - small indicator */}
-                    <circle
-                      cx="180"
-                      cy="180"
-                      r={segmentRadius}
-                      fill="none"
-                      stroke={color}
-                      strokeWidth="4"
-                      strokeOpacity={opacity}
-                      strokeDasharray="20 340" // Small segment to show this timer exists
+                      strokeWidth="12"
+                      strokeOpacity={0.4}
                       strokeLinecap="round"
                     />
-                  </g>
-                )
-              })}
+                  )
+                })}
+
+                {/* Timer boundary markers for setup */}
+                {sessionData.timerBoundaries.map((boundary, index) => {
+                  const position = getMarkerPosition(boundary.endPercent, 120)
+                  const color = getTimerColor(index)
+
+                  return (
+                    <circle
+                      key={`setup-marker-${boundary.timer.id}`}
+                      cx={position.x}
+                      cy={position.y}
+                      r="4"
+                      fill={color}
+                      fillOpacity={0.7}
+                      stroke="rgba(255, 255, 255, 0.8)"
+                      strokeWidth="1"
+                    />
+                  )
+                })}
+              </g>
             </svg>
 
             {/* Central Setup Content */}
@@ -366,67 +442,132 @@ export const CircularTimer = ({
               strokeWidth="2"
             />
 
-            {/* Timer segments - concentric rings */}
-            {timers.map((timer, index) => {
-              const segmentRadius = 120 - (index * 15)
-              const color = getTimerColor(index)
-              const isActive = index === currentTimerIndex
-              const progress = isActive ? calculateProgress(timer) : 0
-              const opacity = timer.status === 'completed' ? 1 : timer.status === 'running' ? 1 : 0.2
+            {/* Single unified ring */}
+            <g>
+              {/* Background ring */}
+              <circle
+                cx="180"
+                cy="180"
+                r="120"
+                fill="none"
+                stroke="rgba(255, 255, 255, 0.1)"
+                strokeWidth="12"
+              />
 
-              return (
-                <g key={timer.id}>
-                  {/* Background ring */}
-                  <circle
-                    cx="180"
-                    cy="180"
-                    r={segmentRadius}
+              {/* Completed segments */}
+              {sessionData.timerBoundaries.map((boundary, index) => {
+                if (index >= currentTimerIndex) return null
+                const color = getTimerColor(index)
+                const startAngle = (boundary.startPercent / 100) * 360 - 90
+                const endAngle = (boundary.endPercent / 100) * 360 - 90
+                const startRadians = startAngle * Math.PI / 180
+                const endRadians = endAngle * Math.PI / 180
+                const radius = 120
+                
+                const startX = 180 + radius * Math.cos(startRadians)
+                const startY = 180 + radius * Math.sin(startRadians)
+                const endX = 180 + radius * Math.cos(endRadians)
+                const endY = 180 + radius * Math.sin(endRadians)
+                
+                const largeArcFlag = (endAngle - startAngle) > 180 ? 1 : 0
+                const path = `M ${startX} ${startY} A ${radius} ${radius} 0 ${largeArcFlag} 1 ${endX} ${endY}`
+
+                return (
+                  <path
+                    key={`completed-${boundary.timer.id}`}
+                    d={path}
                     fill="none"
                     stroke={color}
-                    strokeWidth={isActive ? "12" : "6"}
-                    strokeOpacity={opacity * 0.3}
+                    strokeWidth="12"
+                    strokeOpacity={0.6}
+                    strokeLinecap="round"
                   />
+                )
+              })}
 
-                  {/* Progress arc for active timer */}
-                  {isActive && progress > 0 && (
+              {/* Current active segment background */}
+              {currentTimerIndex >= 0 && currentTimerIndex < sessionData.timerBoundaries.length && (
+                (() => {
+                  const boundary = sessionData.timerBoundaries[currentTimerIndex]
+                  const color = getTimerColor(currentTimerIndex)
+                  const startAngle = (boundary.startPercent / 100) * 360 - 90
+                  const endAngle = (boundary.endPercent / 100) * 360 - 90
+                  const startRadians = startAngle * Math.PI / 180
+                  const endRadians = endAngle * Math.PI / 180
+                  const radius = 120
+                  
+                  const startX = 180 + radius * Math.cos(startRadians)
+                  const startY = 180 + radius * Math.sin(startRadians)
+                  const endX = 180 + radius * Math.cos(endRadians)
+                  const endY = 180 + radius * Math.sin(endRadians)
+                  
+                  const largeArcFlag = (endAngle - startAngle) > 180 ? 1 : 0
+                  const path = `M ${startX} ${startY} A ${radius} ${radius} 0 ${largeArcFlag} 1 ${endX} ${endY}`
+
+                  return (
                     <path
-                      d={createProgressPath(progress, segmentRadius)}
+                      d={path}
                       fill="none"
                       stroke={color}
                       strokeWidth="12"
-                      strokeOpacity={0.8}
+                      strokeOpacity={0.3}
                       strokeLinecap="round"
+                    />
+                  )
+                })()
+              )}
+
+              {/* Current session progress */}
+              {sessionData.sessionProgress > 0 && (
+                <path
+                  d={createProgressPath(sessionData.sessionProgress, 120)}
+                  fill="none"
+                  stroke={currentTimer ? getTimerColor(currentTimerIndex) : 'rgba(255, 255, 255, 0.8)'}
+                  strokeWidth="12"
+                  strokeOpacity={0.9}
+                  strokeLinecap="round"
+                  className="smooth-transition"
+                />
+              )}
+
+              {/* Timer boundary markers */}
+              {sessionData.timerBoundaries.map((boundary, index) => {
+                const position = getMarkerPosition(boundary.endPercent, 120)
+                const color = getTimerColor(index)
+                const isCompleted = boundary.timer.status === 'completed'
+                const isCurrent = index === currentTimerIndex
+                const isPending = boundary.timer.status === 'pending'
+
+                return (
+                  <g key={`marker-${boundary.timer.id}`}>
+                    {/* Marker circle */}
+                    <circle
+                      cx={position.x}
+                      cy={position.y}
+                      r={isCurrent ? "6" : "4"}
+                      fill={isCompleted ? color : isPending ? "none" : color}
+                      stroke={isPending ? color : "rgba(255, 255, 255, 0.8)"}
+                      strokeWidth={isPending ? "2" : "1"}
+                      fillOpacity={isCompleted ? 0.9 : isCurrent ? 0.8 : 0.6}
                       className="smooth-transition"
                     />
-                  )}
-
-                  {/* Completed indicator */}
-                  {timer.status === 'completed' && (
-                    <circle
-                      cx="180"
-                      cy="180"
-                      r={segmentRadius}
-                      fill="none"
-                      stroke={color}
-                      strokeWidth="8"
-                      strokeOpacity={0.8}
-                      strokeDasharray="10 10"
-                    />
-                  )}
-
-                  {/* Pending indicator - small dot */}
-                  {timer.status === 'pending' && index !== currentTimerIndex && (
-                    <circle
-                      cx="180"
-                      cy={180 - segmentRadius}
-                      r="4"
-                      fill={color}
-                      fillOpacity={0.6}
-                    />
-                  )}
-                </g>
-              )
-            })}
+                    
+                    {/* Current timer indicator */}
+                    {isCurrent && (
+                      <circle
+                        cx={position.x}
+                        cy={position.y}
+                        r="8"
+                        fill="none"
+                        stroke={color}
+                        strokeWidth="2"
+                        strokeOpacity={0.5}
+                      />
+                    )}
+                  </g>
+                )
+              })}
+            </g>
           </svg>
 
           {/* Central Timer Display */}
