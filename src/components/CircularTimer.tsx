@@ -10,7 +10,7 @@ import {
   Circle,
   Center,
 } from '@chakra-ui/react'
-import { LuMinus, LuPlus, LuX } from "react-icons/lu"
+import { LuX, LuChevronLeft, LuChevronRight } from "react-icons/lu"
 
 interface Timer {
   id: string
@@ -328,20 +328,50 @@ export const CircularTimer = ({
                       })
                     }}
                   >
-                    <HStack gap={1}>
+                    <HStack 
+                      gap={0} 
+                      bg="rgba(255, 255, 255, 0.1)" 
+                      rounded="full" 
+                      border="2px solid rgba(255, 255, 255, 0.2)"
+                      px={2}
+                      py={1}
+                      align="center"
+                      minW="120px"
+                    >
                       <NumberInput.DecrementTrigger asChild>
-                        <IconButton size="sm" bg="rgba(255, 255, 255, 0.05)" color="rgba(255, 255, 255, 0.6)">
-                          <LuMinus size={12} />
+                        <IconButton 
+                          size="sm" 
+                          variant="ghost"
+                          color="rgba(255, 255, 255, 0.8)"
+                          _hover={{ color: "white" }}
+                          minW="auto"
+                          h="auto"
+                          p={2}
+                        >
+                          <LuChevronLeft size={16} />
                         </IconButton>
                       </NumberInput.DecrementTrigger>
                       <NumberInput.ValueText
-                        textAlign="center" fontSize="sm" color="white"
-                        bg="rgba(255, 255, 255, 0.03)" px={3} py={1} minWidth="50px"
-                        rounded="md" border="1px solid rgba(255, 255, 255, 0.1)"
+                        flex="1"
+                        textAlign="center" 
+                        fontSize="xl" 
+                        color="#4FD1C7"
+                        fontWeight="bold"
+                        bg="transparent"
+                        border="none"
+                        minWidth="40px"
                       />
                       <NumberInput.IncrementTrigger asChild>
-                        <IconButton size="sm" bg="rgba(255, 255, 255, 0.05)" color="rgba(255, 255, 255, 0.6)">
-                          <LuPlus size={12} />
+                        <IconButton 
+                          size="sm" 
+                          variant="ghost"
+                          color="rgba(255, 255, 255, 0.8)"
+                          _hover={{ color: "white" }}
+                          minW="auto"
+                          h="auto"
+                          p={2}
+                        >
+                          <LuChevronRight size={16} />
                         </IconButton>
                       </NumberInput.IncrementTrigger>
                     </HStack>
@@ -366,20 +396,50 @@ export const CircularTimer = ({
                       })
                     }}
                   >
-                    <HStack gap={1}>
+                    <HStack 
+                      gap={0} 
+                      bg="rgba(255, 255, 255, 0.1)" 
+                      rounded="full" 
+                      border="2px solid rgba(255, 255, 255, 0.2)"
+                      px={2}
+                      py={1}
+                      align="center"
+                      minW="120px"
+                    >
                       <NumberInput.DecrementTrigger asChild>
-                        <IconButton size="sm" bg="rgba(255, 255, 255, 0.05)" color="rgba(255, 255, 255, 0.6)">
-                          <LuMinus size={12} />
+                        <IconButton 
+                          size="sm" 
+                          variant="ghost"
+                          color="rgba(255, 255, 255, 0.8)"
+                          _hover={{ color: "white" }}
+                          minW="auto"
+                          h="auto"
+                          p={2}
+                        >
+                          <LuChevronLeft size={16} />
                         </IconButton>
                       </NumberInput.DecrementTrigger>
                       <NumberInput.ValueText
-                        textAlign="center" fontSize="sm" color="white"
-                        bg="rgba(255, 255, 255, 0.03)" px={3} py={1} minWidth="50px"
-                        rounded="md" border="1px solid rgba(255, 255, 255, 0.1)"
+                        flex="1"
+                        textAlign="center" 
+                        fontSize="xl" 
+                        color="#4FD1C7"
+                        fontWeight="bold"
+                        bg="transparent"
+                        border="none"
+                        minWidth="40px"
                       />
                       <NumberInput.IncrementTrigger asChild>
-                        <IconButton size="sm" bg="rgba(255, 255, 255, 0.05)" color="rgba(255, 255, 255, 0.6)">
-                          <LuPlus size={12} />
+                        <IconButton 
+                          size="sm" 
+                          variant="ghost"
+                          color="rgba(255, 255, 255, 0.8)"
+                          _hover={{ color: "white" }}
+                          minW="auto"
+                          h="auto"
+                          p={2}
+                        >
+                          <LuChevronRight size={16} />
                         </IconButton>
                       </NumberInput.IncrementTrigger>
                     </HStack>
