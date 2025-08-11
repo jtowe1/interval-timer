@@ -335,7 +335,7 @@ export const CircularTimer = ({
   return (
     <Box
       position="relative"
-      className={`zen-transition ${isCurrentTimerRunning ? 'timer-breathing' : ''} ${isCurrentTimerCompleted ? 'completion-celebration' : ''}`}
+      className={`zen-transition ${isCurrentTimerCompleted ? 'completion-celebration' : ''}`}
       role="region"
       aria-label={`Circular Timer Display: ${currentTimer?.label || 'Meditation Timer'}`}
       aria-live="polite"
@@ -396,7 +396,7 @@ export const CircularTimer = ({
                       strokeWidth="12"
                       strokeOpacity={0.8}
                       strokeLinecap="round"
-                      className={`smooth-transition ${isCurrentTimerRunning ? 'timer-ring-active' : ''}`}
+                      className="smooth-transition"
                     />
                   )}
 
@@ -446,7 +446,7 @@ export const CircularTimer = ({
                       w={3} h={3} 
                       bg="accent.400" 
                       borderRadius="full" 
-                      className="gentle-pulse"
+                      className=""
                     />
                   )}
                   {isCurrentTimerCompleted && (
@@ -477,7 +477,7 @@ export const CircularTimer = ({
                   lineHeight="0.9"
                   textShadow="0 4px 20px rgba(0, 0, 0, 0.3)"
                   aria-label={currentTimer ? `${currentTimer.minutes} minutes and ${currentTimer.seconds} seconds remaining` : 'No active timer'}
-                  className={isCurrentTimerRunning ? "timer-breathing" : "zen-transition"}
+                  className="zen-transition"
                 >
                   {currentTimer ? (
                     <>

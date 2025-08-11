@@ -59,7 +59,7 @@ export const TimerCard = ({
       <Box
         w="full"
         position="relative"
-        className={`zen-transition ${isTimerRunning ? 'timer-breathing' : ''} ${isCompleted ? 'completion-celebration' : ''}`}
+        className={`zen-transition ${isCompleted ? 'completion-celebration' : ''}`}
         role="region"
         aria-label={`Primary Timer: ${timer.label || 'Unlabeled timer'}`}
         aria-live={isCurrentTimer ? "polite" : "off"}
@@ -126,7 +126,7 @@ export const TimerCard = ({
                     h={3} 
                     bg="accent.400" 
                     borderRadius="full" 
-                    className="gentle-pulse"
+                    className=""
                   />
                 )}
                 {isCompleted && (
@@ -163,7 +163,7 @@ export const TimerCard = ({
                 lineHeight="0.9"
                 textShadow="0 4px 20px rgba(0, 0, 0, 0.3)"
                 aria-label={`${timer.minutes} minutes and ${timer.seconds} seconds remaining`}
-                className={isTimerRunning ? "timer-breathing" : "zen-transition"}
+                className="zen-transition"
               >
                 {String(timer.minutes).padStart(2, '0')}
                 <Text 
@@ -453,7 +453,7 @@ export const TimerCard = ({
             : "rgba(255, 255, 255, 0.1)"
       }
       rounded={displayMode === 'tertiary' ? "lg" : "xl"}
-      className={`zen-transition ${isCurrentTimer && isTimerRunning ? 'meditation-flow' : ''} ${isCompleted ? 'completion-celebration' : ''}`}
+      className={`zen-transition ${isCompleted ? 'completion-celebration' : ''}`}
       role="region"
       aria-label={`Timer ${index + 1}: ${timer.label || 'Unlabeled'}`}
       aria-live={isCurrentTimer ? "polite" : "off"}
@@ -476,7 +476,7 @@ export const TimerCard = ({
                 h={2} 
                 bg="accent.400" 
                 rounded="full" 
-                className="gentle-pulse"
+                className=""
               />
             )}
             {isCompleted && (
@@ -519,7 +519,7 @@ export const TimerCard = ({
             letterSpacing="-0.01em"
             lineHeight="1"
             aria-label={`${timer.minutes} minutes and ${timer.seconds} seconds remaining`}
-            className={isCurrentTimer && isTimerRunning ? "meditation-flow" : "zen-transition"}
+            className="zen-transition"
           >
             {String(timer.minutes).padStart(2, '0')}
             <Text as="span" color="rgba(255, 255, 255, 0.4)" aria-hidden="true">

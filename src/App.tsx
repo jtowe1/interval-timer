@@ -140,7 +140,7 @@ function App() {
                 fontSize="lg"
                 fontWeight="300"
                 textAlign="center"
-                className="meditation-flow"
+                className=""
               >
                 Timer {appState.currentTimerIndex + 1} of {appState.timers.length}
               </Text>

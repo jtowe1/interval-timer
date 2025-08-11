@@ -1,57 +1,7 @@
 /* Enhanced meditation-focused animations with natural breathing rhythms */
 
-/* Primary breathing animation - 4-second natural breath cycle */
-@keyframes timer-breathe {
-  0% { 
-    transform: scale(1); 
-    opacity: 0.85;
-    filter: blur(0px);
-  }
-  25% { 
-    transform: scale(1.005); 
-    opacity: 0.92;
-  }
-  50% { 
-    transform: scale(1.01); 
-    opacity: 1;
-    filter: blur(0.5px);
-  }
-  75% { 
-    transform: scale(1.005); 
-    opacity: 0.92;
-  }
-  100% { 
-    transform: scale(1); 
-    opacity: 0.85;
-    filter: blur(0px);
-  }
-}
 
-/* Deep meditation breathing - slower, more profound */
-@keyframes meditation-breathe {
-  0%, 100% { 
-    transform: scale(1) rotate(0deg); 
-    opacity: 0.8;
-    filter: blur(0px) brightness(1);
-  }
-  50% { 
-    transform: scale(1.008) rotate(0.1deg); 
-    opacity: 1;
-    filter: blur(0.8px) brightness(1.05);
-  }
-}
 
-/* Legacy support - mapped to new timer-breathe */
-@keyframes breathe {
-  0%, 100% { 
-    transform: scale(1); 
-    opacity: 0.85;
-  }
-  50% { 
-    transform: scale(1.01); 
-    opacity: 1;
-  }
-}
 
 /* Organic pulse for running indicator - heartbeat rhythm */
 @keyframes gentle-pulse {
@@ -183,22 +133,21 @@
   100% { transform: scale(1); }
 }
 
-/* Natural easing functions based on breathing patterns */
+/* Natural easing functions for smooth animations */
 :root {
-  --ease-breathe-in: cubic-bezier(0.4, 0, 0.2, 1);      /* Inhale curve */
-  --ease-breathe-out: cubic-bezier(0.2, 0, 0.4, 1);     /* Exhale curve */
-  --ease-breath-hold: cubic-bezier(0.25, 0.1, 0.25, 1); /* Breath retention */
   --ease-meditation: cubic-bezier(0.16, 1, 0.3, 1);     /* Deep meditation */
   --ease-zen-flow: cubic-bezier(0.34, 1.56, 0.64, 1);   /* Gentle zen movement */
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);          /* Smooth transitions */
+  --ease-gentle: cubic-bezier(0.25, 0.1, 0.25, 1);      /* Gentle movements */
 }
 
 /* Organic transition system */
 .smooth-transition {
-  transition: all 0.4s var(--ease-breathe-out);
+  transition: all 0.4s var(--ease-smooth);
 }
 
 .smooth-transition-fast {
-  transition: all 0.2s var(--ease-breathe-in);
+  transition: all 0.2s var(--ease-smooth);
 }
 
 .meditation-transition {
@@ -210,20 +159,11 @@
 }
 
 /* Enhanced meditation-specific classes */
-.timer-breathing {
-  animation: timer-breathe 4s var(--ease-breathe-out) infinite;
-}
 
-.meditation-breathing {
-  animation: meditation-breathe 6s var(--ease-meditation) infinite;
-}
 
-.breathing-animation {
-  animation: timer-breathe 4s var(--ease-breathe-out) infinite;
-}
 
 .gentle-pulse {
-  animation: gentle-pulse 2s var(--ease-breath-hold) infinite;
+  animation: gentle-pulse 2s var(--ease-gentle) infinite;
 }
 
 .meditation-flow {
@@ -235,11 +175,11 @@
 }
 
 .fade-in {
-  animation: fade-in 0.6s var(--ease-breathe-out) forwards;
+  animation: fade-in 0.6s var(--ease-smooth) forwards;
 }
 
 .slide-in-left {
-  animation: slide-in-left 0.5s var(--ease-breathe-in) forwards;
+  animation: slide-in-left 0.5s var(--ease-smooth) forwards;
 }
 
 .completion-celebration {
@@ -266,9 +206,9 @@
 
 /* Organic interaction effects */
 .hover-lift {
-  transition: transform 0.3s var(--ease-breathe-out), 
-              box-shadow 0.3s var(--ease-breathe-out),
-              filter 0.3s var(--ease-breathe-out);
+  transition: transform 0.3s var(--ease-smooth), 
+              box-shadow 0.3s var(--ease-smooth),
+              filter 0.3s var(--ease-smooth);
 }
 
 .hover-lift:hover {
@@ -279,8 +219,8 @@
 
 /* Zen button interactions */
 .button-press {
-  transition: transform 0.15s var(--ease-breathe-in),
-              filter 0.15s var(--ease-breathe-in);
+  transition: transform 0.15s var(--ease-smooth),
+              filter 0.15s var(--ease-smooth);
 }
 
 .button-press:active {
@@ -314,14 +254,14 @@
 }
 
 .circular-timer path {
-  transition: stroke-dasharray 0.5s var(--ease-breathe-out),
-              stroke-opacity 0.3s var(--ease-breathe-out);
+  transition: stroke-dasharray 0.5s var(--ease-smooth),
+              stroke-opacity 0.3s var(--ease-smooth);
 }
 
 .circular-timer circle {
-  transition: stroke-width 0.4s var(--ease-breathe-out),
-              stroke-opacity 0.3s var(--ease-breathe-out),
-              stroke-dasharray 0.5s var(--ease-breathe-out);
+  transition: stroke-width 0.4s var(--ease-smooth),
+              stroke-opacity 0.3s var(--ease-smooth),
+              stroke-dasharray 0.5s var(--ease-smooth);
 }
 
 /* Gentle rotation for active timer rings */
@@ -347,10 +287,7 @@
 
 /* Accessible alternatives for reduced motion */
 @media (prefers-reduced-motion: reduce) {
-  /* Disable all breathing and motion animations */
-  .timer-breathing,
-  .meditation-breathing,
-  .breathing-animation,
+  /* Disable motion animations */
   .gentle-pulse,
   .meditation-flow,
   .zen-emerge,
@@ -362,11 +299,7 @@
     animation: none !important;
   }
   
-  /* Subtle focus alternatives */
-  .timer-breathing {
-    opacity: 1;
-    transform: none;
-  }
+  /* Subtle focus alternatives for remaining animations */
   
   .gentle-pulse {
     opacity: 1;
