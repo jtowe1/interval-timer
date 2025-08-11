@@ -282,8 +282,10 @@ export const CircularTimer = ({
                     bg="rgba(255, 255, 255, 0.05)"
                     color="rgba(255, 255, 255, 0.6)"
                     border="1px solid rgba(255, 255, 255, 0.1)"
+                    _hover={{ bg: 'rgba(255, 255, 255, 0.1)' }}
                     onClick={() => onRemoveTimer(timer.id)}
                     aria-label="Remove timer"
+                    borderRadius="0.75rem"
                   >
                     <LuX size={14} />
                   </IconButton>
