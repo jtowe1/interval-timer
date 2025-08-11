@@ -44,7 +44,7 @@ const system = createSystem(config)
 
 function App() {
   const { initializeAudio, playChime } = useAudio()
-  
+
   const {
     appState,
     addTimer,
@@ -53,14 +53,14 @@ function App() {
     startMeditation,
     stopMeditation
   } = useTimer(playChime)
-  
+
   const [mode, setMode] = useState<'setup' | 'session'>('setup')
 
 
   const handleStartMeditation = async () => {
     // Initialize audio for chime sounds
     await initializeAudio()
-    
+
     const success = startMeditation()
     if (success) {
       setMode('session')
@@ -81,7 +81,7 @@ function App() {
     <ChakraProvider value={system}>
       <Box
         minH="100vh"
-        bg={mode === 'session' 
+        bg={mode === 'session'
           ? "linear-gradient(135deg, #0a1018 0%, #0f172a 40%, #1e293b 100%)"
           : "linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%)"
         }
@@ -99,8 +99,8 @@ function App() {
       >
         {/* Session Mode - Floating Layout */}
         {mode === 'session' ? (
-          <Box 
-            w="full" 
+          <Box
+            w="full"
             maxW="1200px"
             mx="auto"
             position="relative"
@@ -114,8 +114,8 @@ function App() {
               justifyContent="center"
             >
               {/* Circular Timer Display */}
-              <Box 
-                flex="1" 
+              <Box
+                flex="1"
                 maxW={{ base: '100%', lg: '600px' }}
                 display="flex"
                 justifyContent="center"
@@ -131,7 +131,7 @@ function App() {
                 />
               </Box>
             </Box>
-            
+
             {/* Session Controls */}
             <VStack gap={4} mt={8} align="center">
               {/* Session Progress */}
@@ -144,7 +144,7 @@ function App() {
               >
                 Timer {appState.currentTimerIndex + 1} of {appState.timers.length}
               </Text>
-              
+
               {/* Session Action Buttons */}
               <VStack gap={3} w={{ base: '100%', sm: '400px' }}>
                 <Button
@@ -171,13 +171,13 @@ function App() {
                 >
                   End Meditation
                 </Button>
-                
+
                 <Button
                   bg="transparent"
                   border="1px solid rgba(255, 255, 255, 0.1)"
                   color="rgba(255, 255, 255, 0.7)"
                   className="meditation-button"
-                  _hover={{ 
+                  _hover={{
                     bg: 'rgba(255, 255, 255, 0.05)',
                     borderColor: 'rgba(255, 255, 255, 0.2)'
                   }}
@@ -196,7 +196,7 @@ function App() {
           </Box>
         ) : (
           /* Setup Mode - Centered Layout */
-          <Box 
+          <Box
             maxW="500px"
             w="full"
             mx="auto"
@@ -204,10 +204,10 @@ function App() {
             <VStack gap={8} align="center">
               {/* Header */}
               <VStack gap={3} mb={4} className="fade-in">
-                <Heading 
-                  size={{ base: '2xl', md: '3xl' }} 
-                  color="white" 
-                  fontWeight="200" 
+                <Heading
+                  size={{ base: '2xl', md: '3xl' }}
+                  color="white"
+                  fontWeight="200"
                   textAlign="center"
                   letterSpacing="-0.02em"
                   as="h1"
@@ -223,6 +223,7 @@ function App() {
                   maxW="400px"
                   lineHeight="1.6"
                   px={{ base: 2, sm: 0 }}
+                  padding={2}
                 >
                   Create your mindful practice with personalized interval timers
                 </Text>
