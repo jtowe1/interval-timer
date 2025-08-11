@@ -35,7 +35,7 @@ interface CircularTimerProps {
 // Color system for multiple timers as specified in design
 const timerColors = {
   timer1: '#0d7fe6', // Primary Blue - Focus/Breath
-  timer2: '#52a652', // Nature Green - Growth/Heart  
+  timer2: '#52a652', // Nature Green - Growth/Heart
   timer3: '#a87c63', // Earth Brown - Grounding/Root
   timer4: '#14b8a6', // Secondary Teal - Balance/Throat
   timer5: '#c19a6b'  // Warm Accent - Warmth/Solar
@@ -65,16 +65,16 @@ export const CircularTimer = ({
 
   // Calculate cumulative session progress and timer boundaries
   const calculateSessionData = () => {
-    const totalSessionSeconds = timers.reduce((sum, timer) => 
+    const totalSessionSeconds = timers.reduce((sum, timer) =>
       sum + timer.originalMinutes * 60 + timer.originalSeconds, 0)
-    
+
     let cumulativeSeconds = 0
     const timerBoundaries = timers.map((timer, index) => {
       const timerDuration = timer.originalMinutes * 60 + timer.originalSeconds
       const startPercent = (cumulativeSeconds / totalSessionSeconds) * 100
       cumulativeSeconds += timerDuration
       const endPercent = (cumulativeSeconds / totalSessionSeconds) * 100
-      
+
       return {
         index,
         startPercent,
@@ -83,15 +83,15 @@ export const CircularTimer = ({
         timer
       }
     })
-    
+
     // Calculate overall session progress
-    const completedSeconds = timers.slice(0, currentTimerIndex).reduce((sum, timer) => 
+    const completedSeconds = timers.slice(0, currentTimerIndex).reduce((sum, timer) =>
       sum + timer.originalMinutes * 60 + timer.originalSeconds, 0)
-    const currentTimerProgress = currentTimer ? 
+    const currentTimerProgress = currentTimer ?
       (currentTimer.originalMinutes * 60 + currentTimer.originalSeconds) - (currentTimer.minutes * 60 + currentTimer.seconds) : 0
-    const sessionProgress = totalSessionSeconds > 0 ? 
+    const sessionProgress = totalSessionSeconds > 0 ?
       ((completedSeconds + currentTimerProgress) / totalSessionSeconds) * 100 : 0
-    
+
     return {
       sessionProgress,
       timerBoundaries,
@@ -115,7 +115,7 @@ export const CircularTimer = ({
     const x = 180 + radius * Math.cos(radians)
     const y = 180 + radius * Math.sin(radians)
     const largeArcFlag = angle > 180 ? 1 : 0
-    
+
     return `M 180 ${180 - radius} A ${radius} ${radius} 0 ${largeArcFlag} 1 ${x} ${y}`
   }
 
@@ -179,12 +179,12 @@ export const CircularTimer = ({
                   const startRadians = startAngle * Math.PI / 180
                   const endRadians = endAngle * Math.PI / 180
                   const radius = 120
-                  
+
                   const startX = 180 + radius * Math.cos(startRadians)
                   const startY = 180 + radius * Math.sin(startRadians)
                   const endX = 180 + radius * Math.cos(endRadians)
                   const endY = 180 + radius * Math.sin(endRadians)
-                  
+
                   const largeArcFlag = (endAngle - startAngle) > 180 ? 1 : 0
                   const path = `M ${startX} ${startY} A ${radius} ${radius} 0 ${largeArcFlag} 1 ${endX} ${endY}`
 
@@ -261,7 +261,7 @@ export const CircularTimer = ({
             bg="rgba(255, 255, 255, 0.05)"
             border="1px solid"
             borderColor="rgba(255, 255, 255, 0.1)"
-            rounded="xl"
+            borderRadius="2rem"
             className="zen-transition"
           >
             <VStack gap={4}>
@@ -300,11 +300,11 @@ export const CircularTimer = ({
                 color="white"
                 fontSize="sm"
                 h={10}
-                rounded="lg"
+                rounded="3xl"
                 disabled={isRunning}
                 textAlign="center"
                 _placeholder={{ color: 'rgba(255, 255, 255, 0.4)', textAlign: 'center' }}
-                _focus={{ 
+                _focus={{
                   borderColor: getTimerColor(index),
                   boxShadow: `0 0 0 3px ${getTimerColor(index)}20`
                 }}
@@ -328,10 +328,10 @@ export const CircularTimer = ({
                       })
                     }}
                   >
-                    <HStack 
-                      gap={0} 
-                      bg="rgba(255, 255, 255, 0.1)" 
-                      rounded="full" 
+                    <HStack
+                      gap={0}
+                      bg="rgba(255, 255, 255, 0.1)"
+                      borderRadius="1.5rem"
                       border="2px solid rgba(255, 255, 255, 0.2)"
                       px={2}
                       py={1}
@@ -339,22 +339,23 @@ export const CircularTimer = ({
                       minW="120px"
                     >
                       <NumberInput.DecrementTrigger asChild>
-                        <IconButton 
-                          size="sm" 
+                        <IconButton
+                          size="sm"
                           variant="ghost"
                           color="rgba(255, 255, 255, 0.8)"
                           _hover={{ color: "white" }}
                           minW="auto"
                           h="auto"
                           p={2}
+                          borderRadius="2rem"
                         >
                           <LuChevronLeft size={16} />
                         </IconButton>
                       </NumberInput.DecrementTrigger>
                       <NumberInput.ValueText
                         flex="1"
-                        textAlign="center" 
-                        fontSize="xl" 
+                        textAlign="center"
+                        fontSize="xl"
                         color="#4FD1C7"
                         fontWeight="bold"
                         bg="transparent"
@@ -362,14 +363,15 @@ export const CircularTimer = ({
                         minWidth="40px"
                       />
                       <NumberInput.IncrementTrigger asChild>
-                        <IconButton 
-                          size="sm" 
+                        <IconButton
+                          size="sm"
                           variant="ghost"
                           color="rgba(255, 255, 255, 0.8)"
                           _hover={{ color: "white" }}
                           minW="auto"
                           h="auto"
                           p={2}
+                          borderRadius="2rem"
                         >
                           <LuChevronRight size={16} />
                         </IconButton>
@@ -396,10 +398,10 @@ export const CircularTimer = ({
                       })
                     }}
                   >
-                    <HStack 
-                      gap={0} 
-                      bg="rgba(255, 255, 255, 0.1)" 
-                      rounded="full" 
+                    <HStack
+                      gap={0}
+                      bg="rgba(255, 255, 255, 0.1)"
+                      borderRadius="1.5rem"
                       border="2px solid rgba(255, 255, 255, 0.2)"
                       px={2}
                       py={1}
@@ -407,22 +409,23 @@ export const CircularTimer = ({
                       minW="120px"
                     >
                       <NumberInput.DecrementTrigger asChild>
-                        <IconButton 
-                          size="sm" 
+                        <IconButton
+                          size="sm"
                           variant="ghost"
                           color="rgba(255, 255, 255, 0.8)"
                           _hover={{ color: "white" }}
                           minW="auto"
                           h="auto"
                           p={2}
+                          borderRadius="2rem"
                         >
                           <LuChevronLeft size={16} />
                         </IconButton>
                       </NumberInput.DecrementTrigger>
                       <NumberInput.ValueText
                         flex="1"
-                        textAlign="center" 
-                        fontSize="xl" 
+                        textAlign="center"
+                        fontSize="xl"
                         color="#4FD1C7"
                         fontWeight="bold"
                         bg="transparent"
@@ -430,14 +433,15 @@ export const CircularTimer = ({
                         minWidth="40px"
                       />
                       <NumberInput.IncrementTrigger asChild>
-                        <IconButton 
-                          size="sm" 
+                        <IconButton
+                          size="sm"
                           variant="ghost"
                           color="rgba(255, 255, 255, 0.8)"
                           _hover={{ color: "white" }}
                           minW="auto"
                           h="auto"
                           p={2}
+                          borderRadius="2rem"
                         >
                           <LuChevronRight size={16} />
                         </IconButton>
@@ -458,7 +462,7 @@ export const CircularTimer = ({
           onClick={onAddTimer}
           w="full"
           h={12}
-          rounded="xl"
+          rounded="3xl"
           _hover={{ bg: 'rgba(255, 255, 255, 0.1)' }}
         >
           + Add Timer
@@ -523,12 +527,12 @@ export const CircularTimer = ({
                 const startRadians = startAngle * Math.PI / 180
                 const endRadians = endAngle * Math.PI / 180
                 const radius = 120
-                
+
                 const startX = 180 + radius * Math.cos(startRadians)
                 const startY = 180 + radius * Math.sin(startRadians)
                 const endX = 180 + radius * Math.cos(endRadians)
                 const endY = 180 + radius * Math.sin(endRadians)
-                
+
                 const largeArcFlag = (endAngle - startAngle) > 180 ? 1 : 0
                 const path = `M ${startX} ${startY} A ${radius} ${radius} 0 ${largeArcFlag} 1 ${endX} ${endY}`
 
@@ -555,12 +559,12 @@ export const CircularTimer = ({
                   const startRadians = startAngle * Math.PI / 180
                   const endRadians = endAngle * Math.PI / 180
                   const radius = 120
-                  
+
                   const startX = 180 + radius * Math.cos(startRadians)
                   const startY = 180 + radius * Math.sin(startRadians)
                   const endX = 180 + radius * Math.cos(endRadians)
                   const endY = 180 + radius * Math.sin(endRadians)
-                  
+
                   const largeArcFlag = (endAngle - startAngle) > 180 ? 1 : 0
                   const path = `M ${startX} ${startY} A ${radius} ${radius} 0 ${largeArcFlag} 1 ${endX} ${endY}`
 
@@ -611,7 +615,7 @@ export const CircularTimer = ({
                       fillOpacity={isCompleted ? 0.9 : isCurrent ? 0.8 : 0.6}
                       className="smooth-transition"
                     />
-                    
+
                     {/* Current timer indicator */}
                     {isCurrent && (
                       <circle
@@ -643,10 +647,10 @@ export const CircularTimer = ({
               {(isCurrentTimerRunning || isCurrentTimerCompleted) && (
                 <Box display="flex" alignItems="center" gap={2} mb={2}>
                   {isCurrentTimerRunning && (
-                    <Box 
-                      w={3} h={3} 
-                      bg="accent.400" 
-                      borderRadius="full" 
+                    <Box
+                      w={3} h={3}
+                      bg="accent.400"
+                      borderRadius="full"
                       className=""
                     />
                   )}
@@ -669,7 +673,7 @@ export const CircularTimer = ({
 
               {/* Main Time Display */}
               <Box textAlign="center">
-                <Text 
+                <Text
                   fontSize={{ base: "4xl", md: "5xl", lg: "6xl" }}
                   fontWeight="200"
                   fontFamily="ui-monospace, SFMono-Regular, 'SF Mono', Monaco, Consolas, 'Liberation Mono', 'Courier New', monospace"
@@ -683,9 +687,9 @@ export const CircularTimer = ({
                   {currentTimer ? (
                     <>
                       {String(currentTimer.minutes).padStart(2, '0')}
-                      <Text 
-                        as="span" 
-                        color="rgba(255, 255, 255, 0.4)" 
+                      <Text
+                        as="span"
+                        color="rgba(255, 255, 255, 0.4)"
                         fontSize={{ base: "2xl", md: "3xl", lg: "4xl" }}
                         aria-hidden="true"
                       >

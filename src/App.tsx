@@ -164,7 +164,7 @@ function App() {
                   h={14}
                   fontSize="lg"
                   fontWeight="400"
-                  rounded="xl"
+                  rounded="3xl"
                   onClick={handleStopMeditation}
                   boxShadow="0 4px 20px rgba(239, 68, 68, 0.25)"
                   aria-label="End meditation session and return to setup"
@@ -185,7 +185,7 @@ function App() {
                   h={12}
                   fontSize="md"
                   fontWeight="300"
-                  rounded="xl"
+                  rounded="3xl"
                   onClick={() => setMode('setup')}
                   aria-label="Return to timer setup mode"
                 >
@@ -258,7 +258,7 @@ function App() {
                 h={16}
                 fontSize="xl"
                 fontWeight="300"
-                rounded="xl"
+                rounded="3xl"
                 onClick={handleStartMeditation}
                 mt={6}
                 boxShadow="0 8px 30px rgba(82, 166, 82, 0.3)"

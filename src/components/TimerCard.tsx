@@ -82,7 +82,7 @@ export const TimerCard = ({
               position="absolute"
               className="smooth-transition"
             />
-            
+
             {/* Progress ring */}
             {progress > 0 && (
               <Box
@@ -121,11 +121,11 @@ export const TimerCard = ({
                 mb={2}
               >
                 {isTimerRunning && (
-                  <Box 
-                    w={3} 
-                    h={3} 
-                    bg="accent.400" 
-                    borderRadius="full" 
+                  <Box
+                    w={3}
+                    h={3}
+                    bg="accent.400"
+                    borderRadius="full"
                     className=""
                   />
                 )}
@@ -154,7 +154,7 @@ export const TimerCard = ({
 
             {/* Massive Timer Display */}
             <Box textAlign="center">
-              <Text 
+              <Text
                 fontSize="var(--font-size-timer-primary)"
                 fontWeight="var(--font-weight-timer)"
                 fontFamily="var(--font-meditation-mono)"
@@ -166,9 +166,9 @@ export const TimerCard = ({
                 className="zen-transition"
               >
                 {String(timer.minutes).padStart(2, '0')}
-                <Text 
-                  as="span" 
-                  color="rgba(255, 255, 255, 0.4)" 
+                <Text
+                  as="span"
+                  color="rgba(255, 255, 255, 0.4)"
                   fontSize="var(--font-size-timer-secondary)"
                   aria-hidden="true"
                 >
@@ -210,8 +210,8 @@ export const TimerCard = ({
 
         {/* Floating Controls - Only show in setup mode */}
         {showControls && (
-          <VStack 
-            gap={4} 
+          <VStack
+            gap={4}
             mt={8}
             className="zen-emerge"
           >
@@ -226,11 +226,11 @@ export const TimerCard = ({
               color="white"
               fontSize="md"
               h={12}
-              rounded="xl"
+              rounded="3xl"
               disabled={isRunning}
               textAlign="center"
               _placeholder={{ color: 'rgba(255, 255, 255, 0.4)', textAlign: 'center' }}
-              _focus={{ 
+              _focus={{
                 borderColor: 'primary.400',
                 boxShadow: '0 0 0 3px rgba(13, 127, 230, 0.1)',
                 bg: 'rgba(255, 255, 255, 0.08)'
@@ -239,24 +239,24 @@ export const TimerCard = ({
             />
 
             {/* Time Controls */}
-            <Box 
-              w="full" 
-              maxW="400px" 
+            <Box
+              w="full"
+              maxW="400px"
               mx="auto"
               overflow="visible"
               className="meditation-timer-controls"
             >
-              <HStack 
-                gap={{ base: 4, md: 8 }} 
+              <HStack
+                gap={{ base: 4, md: 8 }}
                 justify="center"
                 flexWrap="nowrap"
                 w="full"
               >
                 <VStack gap={3} flex="1" minW="0">
-                  <Text 
-                    color="rgba(255, 255, 255, 0.6)" 
-                    fontSize="xs" 
-                    fontWeight="500" 
+                  <Text
+                    color="rgba(255, 255, 255, 0.6)"
+                    fontSize="xs"
+                    fontWeight="500"
                     letterSpacing="0.1em"
                   >
                     MINUTES
@@ -301,7 +301,7 @@ export const TimerCard = ({
                         py={3}
                         minWidth={{ base: "60px", md: "70px" }}
                         maxWidth={{ base: "70px", md: "80px" }}
-                        rounded="lg"
+                        rounded="2xl"
                         border="1px solid rgba(255, 255, 255, 0.1)"
                         flexShrink={0}
                       />
@@ -326,10 +326,10 @@ export const TimerCard = ({
                 </VStack>
 
                 <VStack gap={3} flex="1" minW="0">
-                  <Text 
-                    color="rgba(255, 255, 255, 0.6)" 
-                    fontSize="xs" 
-                    fontWeight="500" 
+                  <Text
+                    color="rgba(255, 255, 255, 0.6)"
+                    fontSize="xs"
+                    fontWeight="500"
                     letterSpacing="0.1em"
                   >
                     SECONDS
@@ -374,7 +374,7 @@ export const TimerCard = ({
                         py={3}
                         minWidth={{ base: "60px", md: "70px" }}
                         maxWidth={{ base: "70px", md: "80px" }}
-                        rounded="lg"
+                        rounded="2xl"
                         border="1px solid rgba(255, 255, 255, 0.1)"
                         flexShrink={0}
                       />
@@ -403,7 +403,7 @@ export const TimerCard = ({
             {/* Action Buttons */}
             <HStack justify="space-between" w="full" mt={4}>
               <Button
-                bg="rgba(255, 255, 255, 0.05)" 
+                bg="rgba(255, 255, 255, 0.05)"
                 border="1px solid rgba(255, 255, 255, 0.1)"
                 color="rgba(255, 255, 255, 0.7)"
                 className="meditation-button"
@@ -412,21 +412,21 @@ export const TimerCard = ({
                 disabled={isRunning}
                 px={6}
                 py={3}
-                rounded="xl"
+                rounded="3xl"
               >
                 + Add Timer
               </Button>
 
               {canRemove && (
                 <IconButton
-                  bg="rgba(255, 255, 255, 0.05)" 
+                  bg="rgba(255, 255, 255, 0.05)"
                   color="rgba(255, 255, 255, 0.7)"
                   border="1px solid rgba(255, 255, 255, 0.1)"
                   className="meditation-button"
                   _hover={{ bg: 'rgba(255, 255, 255, 0.1)' }}
                   onClick={() => onRemoveTimer(timer.id)}
                   aria-label="Remove timer"
-                  rounded="xl"
+                  rounded="3xl"
                 >
                   <LuX size={18} />
                 </IconButton>
@@ -446,10 +446,10 @@ export const TimerCard = ({
       bg={displayMode === 'tertiary' ? "rgba(255, 255, 255, 0.03)" : "rgba(255, 255, 255, 0.05)"}
       border="1px solid"
       borderColor={
-        isCompleted 
-          ? "accent.400" 
-          : isCurrentTimer 
-            ? "primary.400" 
+        isCompleted
+          ? "accent.400"
+          : isCurrentTimer
+            ? "primary.400"
             : "rgba(255, 255, 255, 0.1)"
       }
       rounded={displayMode === 'tertiary' ? "lg" : "xl"}
@@ -462,20 +462,20 @@ export const TimerCard = ({
         {/* Compact Header & Status */}
         <HStack justify="space-between" w="full">
           <HStack gap={2}>
-            <Text 
-              color="white" 
-              fontSize={displayMode === 'tertiary' ? "sm" : "md"} 
+            <Text
+              color="white"
+              fontSize={displayMode === 'tertiary' ? "sm" : "md"}
               fontWeight="400"
               opacity={0.8}
             >
               {timer.label || `Timer ${index + 1}`}
             </Text>
             {isTimerRunning && (
-              <Box 
-                w={2} 
-                h={2} 
-                bg="accent.400" 
-                rounded="full" 
+              <Box
+                w={2}
+                h={2}
+                bg="accent.400"
+                rounded="full"
                 className=""
               />
             )}
@@ -490,11 +490,11 @@ export const TimerCard = ({
               </Circle>
             )}
           </HStack>
-          
+
           {displayMode !== 'tertiary' && (
-            <Text 
-              color="rgba(255, 255, 255, 0.4)" 
-              fontSize="xs" 
+            <Text
+              color="rgba(255, 255, 255, 0.4)"
+              fontSize="xs"
               textTransform="uppercase"
               letterSpacing="0.05em"
               fontWeight="400"
@@ -511,8 +511,8 @@ export const TimerCard = ({
           role="timer"
           aria-live={isCurrentTimer && isTimerRunning ? "polite" : "off"}
         >
-          <Text 
-            color="white" 
+          <Text
+            color="white"
             fontSize={displayMode === 'tertiary' ? "var(--font-size-timer-tertiary)" : "var(--font-size-timer-secondary)"}
             fontWeight="var(--font-weight-timer)"
             fontFamily="var(--font-meditation-mono)"
@@ -527,7 +527,7 @@ export const TimerCard = ({
             </Text>
             {String(timer.seconds).padStart(2, '0')}
           </Text>
-          
+
           {progress > 0 && displayMode !== 'tertiary' && (
             <Text
               color="rgba(255, 255, 255, 0.4)"
@@ -543,9 +543,9 @@ export const TimerCard = ({
         {/* Compact Controls - Only in setup mode */}
         {showControls && displayMode === 'secondary' && (
           <Box w="full" overflow="visible" className="meditation-timer-controls">
-            <HStack 
-              gap={3} 
-              w="full" 
+            <HStack
+              gap={3}
+              w="full"
               justify="center"
               flexWrap="nowrap"
               maxW="300px"
@@ -591,7 +591,7 @@ export const TimerCard = ({
                     py={1}
                     minWidth="36px"
                     maxWidth="44px"
-                    rounded="md"
+                    rounded="xl"
                     border="1px solid rgba(255, 255, 255, 0.1)"
                     flexShrink={0}
                   />
@@ -613,16 +613,16 @@ export const TimerCard = ({
                   </NumberInput.IncrementTrigger>
                 </HStack>
               </NumberInput.Root>
-              
-              <Text 
-                color="rgba(255, 255, 255, 0.4)" 
+
+              <Text
+                color="rgba(255, 255, 255, 0.4)"
                 fontSize="xs"
                 mx={1}
                 flexShrink={0}
               >
                 :
               </Text>
-              
+
               <NumberInput.Root
                 value={timer.originalSeconds.toString()}
                 min={0}
@@ -663,7 +663,7 @@ export const TimerCard = ({
                     py={1}
                     minWidth="36px"
                     maxWidth="44px"
-                    rounded="md"
+                    rounded="xl"
                     border="1px solid rgba(255, 255, 255, 0.1)"
                     flexShrink={0}
                   />
@@ -694,7 +694,7 @@ export const TimerCard = ({
           <HStack justify="space-between" w="full" mt={2}>
             <Button
               size="sm"
-              bg="rgba(255, 255, 255, 0.05)" 
+              bg="rgba(255, 255, 255, 0.05)"
               border="1px solid rgba(255, 255, 255, 0.1)"
               color="rgba(255, 255, 255, 0.7)"
               className="meditation-button"
@@ -707,7 +707,7 @@ export const TimerCard = ({
 
             <IconButton
               size="sm"
-              bg="rgba(255, 255, 255, 0.05)" 
+              bg="rgba(255, 255, 255, 0.05)"
               color="rgba(255, 255, 255, 0.6)"
               border="1px solid rgba(255, 255, 255, 0.1)"
               className="meditation-button"
